@@ -38,7 +38,7 @@ buttonSearch.addEventListener("click", (event) => {
         </div>
         <div class="grid grid-cols-2 gap-4">
             <div class="mx-auto flex items-center text-gray-400 px-2 mb-5">
-                <svg class="mr-2 w-full h-4" viewBox="0 0 11 18" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                <svg class="mr-2 w-4 h-4" viewBox="0 0 11 18" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="Desktop-HD" transform="translate(-120.000000, -479.000000)" fill="#60A2D7"
