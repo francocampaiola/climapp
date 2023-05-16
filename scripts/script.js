@@ -13,6 +13,8 @@ buttonSearch.addEventListener("click", (event) => {
   event.preventDefault();
   ocultarHero();
 
+  let arr = [];
+
   fetch(
     `https://pro.openweathermap.org/data/2.5/weather?q=${inputBusqueda.value}&APPID=${APIKEY}&units=metric`
   )
@@ -20,13 +22,16 @@ buttonSearch.addEventListener("click", (event) => {
       return res.json();
     })
     .then((json) => {
-      if(json.cod === 200)
-      {
+      if (json.cod === 200) {
         resultado += `<div
         class="w-72 -mt-32 mx-auto border bg-transparent b-gray-900 rounded flex flex-col justify-center items-center text-center p-6 lg:-mt-48">
-        <div class="text-md font-bold flex flex-col text-white"><span>${json.name}, ${json.sys.country}</span></div>
+        <div class="text-md font-bold flex flex-col text-white"><span>${
+          json.name
+        }, ${json.sys.country}</span></div>
         <div class="w-32 h-32 flex items-center justify-center">
-            <img src="http://openweathermap.org/img/w/${json.weather[0].icon}.png"
+            <img src="http://openweathermap.org/img/w/${
+              json.weather[0].icon
+            }.png"
                 alt="${json.weather[0].description}"></img>
         </div>
         <p class="font-extrabold text-6xl text-white mb-6">${json.main.temp.toFixed()}º</p>
@@ -147,15 +152,19 @@ buttonSearch.addEventListener("click", (event) => {
             class="rounded-md mt-5 bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             type="submit" onclick="location.reload();">Reintentar
             </button>
-        </div>`
+        </div>`;
       }
 
+      arr.push(json);
+      localStorage.setItem("Weather: ", JSON.stringify(arr));
+
+      console.log(arr);
       resultElement.innerHTML = resultado;
     })
     .catch((err) => {
       console.log(`Error: ${err}`);
     })
     .finally((final) => {
-        inputBusqueda.value = "";
+      inputBusqueda.value = "";
     });
 });
