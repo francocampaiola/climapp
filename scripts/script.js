@@ -2,18 +2,24 @@ const APIKEY = "a4707dcbaf2efaeaa61c9d8f34df5303";
 const buttonSearch = document.getElementById("buscar");
 const resultElement = document.getElementById("resultado");
 const inputBusqueda = document.getElementById("inputBusqueda");
+const previousSearches = document.getElementById("busquedasAnteriores");
 let resultado = "";
+let busquedasAnteriores = "";
+let arr;
 
 function ocultarHero() {
   var element = document.getElementById("hero");
   element.classList.add("hidden");
 }
 
+function mostrarTitleBusquedasAnteriores() {
+    var element = document.getElementById("titleBusquedasAnteriores");
+    element.classList.remove("hidden");
+}
+
 buttonSearch.addEventListener("click", (event) => {
   event.preventDefault();
   ocultarHero();
-
-  let arr = [];
 
   fetch(
     `https://pro.openweathermap.org/data/2.5/weather?q=${inputBusqueda.value}&APPID=${APIKEY}&units=metric`
@@ -144,6 +150,49 @@ buttonSearch.addEventListener("click", (event) => {
             type="submit" onclick="location.reload();">Volver a buscar
             </button>
         </div>`;
+
+        if (!localStorage.weather) {
+          arr = [];
+        } else {
+          arr = JSON.parse(localStorage.getItem("weather"));
+        }
+
+        arr.push(json);
+        localStorage.setItem("weather", JSON.stringify(arr));
+
+        //   console.log(arr);
+
+        // Verifico que el array tenga elementos
+        if (arr.length > 0) {
+            mostrarTitleBusquedasAnteriores();
+
+          for (let i = 0; i < arr.length; i++) {
+            //   busquedasAnteriores += `<div class="flex flex-col justify-center items-center text-center p-6">
+            //     <p class="text-white">${arr[i].name}</p>
+            //     </div>`;
+
+            busquedasAnteriores += 
+            `<div class="grid grid-cols-3 gap-4">
+                <div class="mx-auto border bg-transparent b-gray-900 rounded flex flex-col justify-center items-center text-center p-6 lg:-mt-48">
+                    <div class="text-sm font-bold flex flex-col text-white">
+                        <span>${arr[i].name}, ${arr[i].sys.country}</span>
+                    </div>
+                    <div class="w-32 h-32 flex items-center justify-center">
+                        <img src="http://openweathermap.org/img/w/${
+                            arr[i].weather[0].icon}.png"
+                            alt="${arr[i].weather[0].description}" />
+                    </div>
+                    <p class="font-extrabold text-white mb-6">${arr[i].main.temp.toFixed()}º</p>
+                    <p class="mb-2 text-gray-100">${arr[i].weather[0].main}</p>
+                    <div class=" font-bold text-gray-300 mb-6">
+                        ${arr[i].main.temp_min.toFixed()}º
+                        <span class="font-normal text-gray-300 mx-1">/</span>
+                        ${arr[i].main.temp_max.toFixed()}º
+                    </div>
+                </div>
+            </div>`;
+          }
+        }
       } else {
         resultado += `<div
         class="w-72 -mt-32 mx-auto border bg-transparent b-gray-900 rounded flex flex-col justify-center items-center text-center p-6 lg:-mt-48">
@@ -155,11 +204,8 @@ buttonSearch.addEventListener("click", (event) => {
         </div>`;
       }
 
-      arr.push(json);
-      localStorage.setItem("Weather: ", JSON.stringify(arr));
-
-      console.log(arr);
       resultElement.innerHTML = resultado;
+      previousSearches.innerHTML = busquedasAnteriores;
     })
     .catch((err) => {
       console.log(`Error: ${err}`);
