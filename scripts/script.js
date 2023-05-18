@@ -13,13 +13,19 @@ function ocultarHero() {
 }
 
 function mostrarTitleBusquedasAnteriores() {
-    var element = document.getElementById("titleBusquedasAnteriores");
+  var element = document.getElementById("titleBusquedasAnteriores");
+  element.classList.remove("hidden");
+}
+
+function mostrarDivResultado() {
+    var element = document.getElementById("resultado");
     element.classList.remove("hidden");
 }
 
 buttonSearch.addEventListener("click", (event) => {
   event.preventDefault();
   ocultarHero();
+  mostrarDivResultado();
 
   fetch(
     `https://pro.openweathermap.org/data/2.5/weather?q=${inputBusqueda.value}&APPID=${APIKEY}&units=metric`
@@ -164,33 +170,30 @@ buttonSearch.addEventListener("click", (event) => {
 
         // Verifico que el array tenga elementos
         if (arr.length > 0) {
-            mostrarTitleBusquedasAnteriores();
+          mostrarTitleBusquedasAnteriores();
 
           for (let i = 0; i < arr.length; i++) {
-            //   busquedasAnteriores += `<div class="flex flex-col justify-center items-center text-center p-6">
-            //     <p class="text-white">${arr[i].name}</p>
-            //     </div>`;
-
-            busquedasAnteriores += 
-            `<div class="grid grid-cols-3 gap-4">
-                <div class="mx-auto border bg-transparent b-gray-900 rounded flex flex-col justify-center items-center text-center p-6 lg:-mt-48">
+            busquedasAnteriores += `
+                <div class="mx-auto border bg-transparent b-gray-900 rounded flex flex-col justify-center items-center text-center p-6 mt-10 mb-10">
                     <div class="text-sm font-bold flex flex-col text-white">
                         <span>${arr[i].name}, ${arr[i].sys.country}</span>
                     </div>
                     <div class="w-32 h-32 flex items-center justify-center">
                         <img src="http://openweathermap.org/img/w/${
-                            arr[i].weather[0].icon}.png"
+                          arr[i].weather[0].icon
+                        }.png"
                             alt="${arr[i].weather[0].description}" />
                     </div>
-                    <p class="font-extrabold text-white mb-6">${arr[i].main.temp.toFixed()}º</p>
+                    <p class="font-extrabold text-white mb-6">${arr[
+                      i
+                    ].main.temp.toFixed()}º</p>
                     <p class="mb-2 text-gray-100">${arr[i].weather[0].main}</p>
                     <div class=" font-bold text-gray-300 mb-6">
                         ${arr[i].main.temp_min.toFixed()}º
                         <span class="font-normal text-gray-300 mx-1">/</span>
                         ${arr[i].main.temp_max.toFixed()}º
                     </div>
-                </div>
-            </div>`;
+                </div>`;
           }
         }
       } else {
