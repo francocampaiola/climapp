@@ -3,9 +3,13 @@ const buttonSearch = document.getElementById("buscar");
 const resultElement = document.getElementById("resultado");
 const inputBusqueda = document.getElementById("inputBusqueda");
 const previousSearches = document.getElementById("busquedasAnteriores");
+const videoElement = document.getElementById("videoElement");
+let videoFondo = "";
 let resultado = "";
 let busquedasAnteriores = "";
 let arr;
+
+// Otras funciones
 
 function ocultarHero() {
   var element = document.getElementById("hero");
@@ -18,8 +22,8 @@ function mostrarTitleBusquedasAnteriores() {
 }
 
 function mostrarDivResultado() {
-    var element = document.getElementById("resultado");
-    element.classList.remove("hidden");
+  var element = document.getElementById("resultado");
+  element.classList.remove("hidden");
 }
 
 buttonSearch.addEventListener("click", (event) => {
@@ -157,6 +161,50 @@ buttonSearch.addEventListener("click", (event) => {
             </button>
         </div>`;
 
+        // Coloco un video de youtube con iframe de fondo en función del clima con switch
+        switch (json.weather[0].main) {
+            case "Clear":
+                videoFondo = "https://www.youtube.com/embed/aSk-D86aOtc?autoplay=1&mute=1&controls=0&loop=1";
+                break;
+            // case "Clouds":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            // case "Rain":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            // case "Drizzle":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            // case "Thunderstorm":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            // case "Snow":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            // case "Mist":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            // case "Smoke":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            // case "Haze":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            // case "Dust":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            // case "Fog":
+            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
+            //     break;
+            }
+
+        // Pongo el video de fondo
+        videoFondo = `
+        <video autoplay loop muted class="absolute z-10 w-auto">
+            <source src="${videoFondo}" type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>`;
+
         if (!localStorage.weather) {
           arr = [];
         } else {
@@ -209,6 +257,7 @@ buttonSearch.addEventListener("click", (event) => {
 
       resultElement.innerHTML = resultado;
       previousSearches.innerHTML = busquedasAnteriores;
+      videoElement.innerHTML = videoFondo;
     })
     .catch((err) => {
       console.log(`Error: ${err}`);
