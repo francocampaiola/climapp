@@ -5,6 +5,7 @@ const inputBusqueda = document.getElementById("inputBusqueda");
 const previousSearches = document.getElementById("busquedasAnteriores");
 const videoElement = document.getElementById("videoElement");
 let videoFondo = "";
+let urlVideoFondo = "";
 let resultado = "";
 let busquedasAnteriores = "";
 let arr;
@@ -164,46 +165,42 @@ buttonSearch.addEventListener("click", (event) => {
         // Coloco un video de youtube con iframe de fondo en función del clima con switch
         switch (json.weather[0].main) {
             case "Clear":
-                videoFondo = "https://www.youtube.com/embed/aSk-D86aOtc?autoplay=1&mute=1&controls=0&loop=1";
+                urlVideoFondo = "https://www.youtube.com/embed/fUfum4MC22Q";
                 break;
-            // case "Clouds":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
-            // case "Rain":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
-            // case "Drizzle":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
-            // case "Thunderstorm":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
-            // case "Snow":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
-            // case "Mist":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
-            // case "Smoke":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
-            // case "Haze":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&mute=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
-            // case "Dust":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
-            // case "Fog":
-            //     videoFondo = "https://www.youtube.com/embed/1VQ_3sBZEm0?autoplay=1&controls=0&loop=1&playlist=1VQ_3sBZEm0";
-            //     break;
+            case "Clouds":
+                urlVideoFondo = "https://www.youtube.com/embed/zQft4M80qIM";
+                break;
+            case "Rain":
+                urlVideoFondo = "https://www.youtube.com/embed/mPZkdNFkNps";
+                break;
+            case "Drizzle":
+                urlVideoFondo = "https://www.youtube.com/embed/fKRBmFdfjRA";
+                break;
+            case "Thunderstorm":
+                urlVideoFondo = "https://www.youtube.com/embed/e9G2ab7e0m0";
+                break;
+            case "Snow":
+                urlVideoFondo = "https://www.youtube.com/embed/vz91QpgUjFc";
+                break;
+            case "Mist":
+                urlVideoFondo = "https://www.youtube.com/embed/eiSuDTDfUTY";
+                break;
+            case "Smoke":
+                urlVideoFondo = "https://www.youtube.com/embed/eiSuDTDfUTY";
+                break;
+            case "Haze":
+                urlVideoFondo = "https://www.youtube.com/embed/hVFyBLaEcWM";
+                break;
+            case "Dust":
+                urlVideoFondo = "https://www.youtube.com/embed/L6uCwZ_IsTw";
+                break;
+            case "Fog":
+                urlVideoFondo = "https://www.youtube.com/embed/vOTTTX-tHKQ";
+                break;
             }
 
         // Pongo el video de fondo
-        videoFondo = `
-        <video autoplay loop muted class="absolute z-10 w-auto">
-            <source src="${videoFondo}" type="video/mp4" />
-            Your browser does not support the video tag.
-        </video>`;
+        videoFondo = `<iframe class="h-full aspect-video w-screen -mt-100 left-0 absolute top-0 opacity-10 -z-10 overflow-x-hidden" src="${urlVideoFondo}?autoplay=1&fs=0&mute=1&controls=0&loop=1&modestbranding=0&showinfo=0&rel=0" frameborder="0" ></iframe>`;
 
         if (!localStorage.weather) {
           arr = [];
